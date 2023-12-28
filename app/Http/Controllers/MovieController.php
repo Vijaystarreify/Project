@@ -21,31 +21,69 @@ class MovieController extends Controller
 		}
     }
 
-	public function saveMovieData(Request $request): RedirectResponse
-	{	
-	    $input = $request->input();
-		
-		if (isset($request->image)) {
-		 	$product_file_dir = 'movies-img-'.env('APP_ENV');
-		 	$imageName = time().'-'.rand(1,99).'.'.$request->file('image')->extension();  
-		 	$moveImage = Storage::putFileAs($product_file_dir,$request->file('image'),$imageName);
-		}
-		$movie = Movie::updateOrCreate(
-		    [
-			'id'   => ($request->id) ? $request->id : null,
-			],
-			[
-	        'name' => $request->name,
-	        'user_id' => auth()->user()->id,
-		    'link' => $request->link,
-		    'image' => (isset($imageName)) ? $imageName : null,
-			'description' => $request->description,
-			]
-	    );
-		
-		$status = 'add/update';
-        return redirect()->route('movies-list')->with('status','Movie '.$movie->id.' add/update successfully!');	
-	}
+
+
+public function saveMovieData(Request $request): RedirectResponse
+{
+	// dd($request);
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'trailer_url' => 'required|string|max:255',
+        'description' => 'required|string',
+        'release_date' => 'required|date',
+        'genre' => 'required|string',
+        'directors' => 'required|string',
+        'cast' => 'required|string',
+        'duration' => 'required|integer|min:1',
+        'language' => 'required|string',
+        'country' => 'required|string',
+        'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        'trailer_url' => 'url',
+        'rating' => 'required|string|max:10',
+        'ticket_price' => 'required|numeric|min:0.01',
+        'showtimes' => 'required|string',
+        'theater_name' => 'required|string',
+        'location' => 'required|string',
+        'screen_number' => 'nullable|integer|min:1',
+    ]);
+
+    $input = $request->all();
+
+    $imageName = null;
+    if ($request->hasFile('image')) {
+        $product_file_dir = 'movies-img-' . env('APP_ENV');
+        $imageName = time() . '-' . rand(1, 99) . '.' . $request->file('image')->extension();
+        $moveImage = $request->file('image')->storeAs($product_file_dir, $imageName);
+    }
+
+    $movieData = [
+        'title' => $input['title'],
+        'user_id' => auth()->user()->id,
+        'trailer_url' => $input['trailer_url'],
+        'image' => $imageName,
+        'description' => $input['description'],
+        'release_date' => $input['release_date'],
+        'genre' => $input['genre'],
+        'directors' => $input['directors'],
+        'cast' => $input['cast'],
+        'duration' => $input['duration'],
+        'language' => $input['language'],
+        'country' => $input['country'],
+        'trailer_url' => $input['trailer_url'],
+        'rating' => $input['rating'],
+        'ticket_price' => $input['ticket_price'],
+        'showtimes' => $input['showtimes'],
+        'theater_name' => $input['theater_name'],
+        'location' => $input['location'],
+        'screen_number' => $input['screen_number'],
+    ];
+
+    $movie = Movie::updateOrCreate(['id' => $input['id']], $movieData);
+
+    $status = ($request->id) ? 'update' : 'add';
+    return redirect()->route('movies-list')->with('status', 'Movie ' . $movie->id . ' ' . $status . ' successfully!');
+}
+
 	
 	public function deleteMovie(string $id): RedirectResponse 
 	{
