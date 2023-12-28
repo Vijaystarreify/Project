@@ -12,14 +12,13 @@ class TheaterController extends Controller
     public function theaterForm(string $id)
     {
         $theater = ($id == 'new') ? new Theater() : Theater::with('screens')->findOrFail($id);
-        // dd($theater);
-        $screens = Screen::all();
-        return view('admin.theater-form', ['id' => $id, 'theater' => $theater, 'screens' => $screens]);
+        
+        return view('admin.theater-form', ['id' => $id, 'theater' => $theater]);
     }
 
     public function saveTheaterData(Request $request): RedirectResponse
     {
-        //  dd($request->id);
+        // dd($request->capacity);
         $request->validate($this->getValidationRules());
        
         $theater = Theater::updateOrCreate(
@@ -33,13 +32,10 @@ class TheaterController extends Controller
             [
                 'name' => $request->screen_name,
                 'capacity' => $request->capacity,
-                'theater_id' =>$request->id
+                'theater_id' =>$theater->id
             ]
         );
     
-           // Associate the screen with the theater
-        //    $theater->screens()->sync([$screen->id]);
-
         $status = ($request->id) ? 'update' : 'add';
         return redirect()->route('theaters-list')->with('status', 'Theater ' . $theater->id . ' ' . $status . ' successfully!');
     }
@@ -62,7 +58,7 @@ class TheaterController extends Controller
             'name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'screen_name' => 'required|string|max:255',
-            'capacity' => 'required|integer|min:1',
+          
         ];
     }
 }

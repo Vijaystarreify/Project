@@ -33,12 +33,12 @@
 
                 <div class="mt-4 flex justify-around">
                 <x-label class="w-3/12 text-xl md:font-bold" for="screen_name" value="{{ __('Screen Name') }}" />
-                <x-input class="w-6/12" id="screen_name" type="text" name="screen_name" value="{{ old('screen_name', $screen->screen_name ?? '') }}" required />
+                <x-input class="w-6/12" id="screen_name" type="text" name="screen_name" value="{{ old('screen_name', $theater->screens->name ?? '') }}" required />
             </div>
 
             <div class="mt-4 flex justify-around">
                 <x-label class="w-3/12 text-xl md:font-bold" for="capacity" value="{{ __('Capacity') }}" />
-                <x-input class="w-6/12" id="capacity" type="number" name="capacity" value="{{ old('capacity', $screen->capacity ?? '') }}" required />
+                <x-input class="w-6/12" id="capacity" type="number" name="capacity" value="{{ old('capacity', $theater->screens->capacity  ?? '') }}" required />
             </div>
 
             <div class="mt-4 ml-2">

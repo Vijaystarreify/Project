@@ -12,7 +12,7 @@ class Theater extends Model
 
     public function screens()
     {
-        return $this->hasMany(Screen::class);
+        return $this->hasOne(Screen::class);
     }
 }
 
