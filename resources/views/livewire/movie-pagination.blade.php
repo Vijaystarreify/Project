@@ -40,10 +40,8 @@
                         <tr>
                             <td data-label="ID">{{ $movie->id }}</td>
                             <td data-label="Title">{{ $movie->title }} </td>
-                            <td data-label="Trailer URL"><a href="{{ $movie->trailer_url }}" target="_blank">{{ $movie->trailer_url }}</a></td>                           
+                             <td data-label="Description">{!! $movie->description !!}</td>                         
                             <!-- <td data-label="Image"><img src="{{ asset('storage/movies-img-' . env('APP_ENV') . '/' . $movie->image) }}" alt="{{ $movie->title }}" class="movie-image"></td> -->
-                            <!-- <td data-label="Description">{!! $movie->description !!}</td>
-                            <td data-label="Release Date">{{ $movie->release_date }}</td> -->
                             <!-- <td data-label="Genre">{{ $movie->genre }}</td>
                             <td data-label="Directors">{{ $movie->directors }}</td>
                             <td data-label="Cast">{{ $movie->cast }}</td> -->

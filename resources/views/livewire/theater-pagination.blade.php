@@ -24,15 +24,22 @@
                     <td class="border border-gray-300 p-2">{{ $theater->id }}</td>
                     <td class="border border-gray-300 p-2">{{ $theater->name }}</td>
                     <td class="border border-gray-300 p-2">{{ $theater->location }}</td>
-                    <td class="border border-gray-300 p-2 text-center">
+                    <td class="border border-gray-300 p-2 text-center">                       
                      <a href="{{ route('theater-form', ['id' => $theater->id]) }}" class="text-blue-500"> <button class="button small blue --jb-modal" data-target="sample-modal-2" type="button">
                      <span class="icon"><i class="mdi mdi-eye"></i></span>
                      </button></a>|
                     <a href="{{ route('theater-delete', ['id' => $theater->id]) }}" class="text-red-500" onclick="return confirm('Are you sure?')"> <button class="button small red --jb-modal" data-target="sample-modal" type="button">
                     <span class="icon"><i class="mdi mdi-trash-can"></i></span>
                     </button></a>
+                    <button class="button small green" wire:click="$set('showAddScreenModal', true)">
+                    <span class="icon"><i class="mdi mdi-plus"></i></span> Add Screen
+                     </button> 
+                     @if($showAddScreenModal)
+                   <livewire:add-screen-form :theater="$theater" />
+                      @endif
                     </td>
                 </tr>
+               
             @endforeach
         </tbody>
     </table>

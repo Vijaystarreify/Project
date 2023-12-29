@@ -31,15 +31,21 @@
                     <x-input id="location" class="w-6/12" type="text" name="location" value="{{ old('location', $theater->location ?? '') }}" required />
                 </div>
 
-                <div class="mt-4 flex justify-around">
-                <x-label class="w-3/12 text-xl md:font-bold" for="screen_name" value="{{ __('Screen Name') }}" />
-                <x-input class="w-6/12" id="screen_name" type="text" name="screen_name" value="{{ old('screen_name', $theater->screens->name ?? '') }}" required />
-            </div>
+                @if ($id != 'new') {{-- Check if editing, then show screen details --}}
+                @if ($theater->screens)
+                    @foreach ($theater->screens as $screen)
+                        <div class="mt-4 flex justify-around">
+                            <x-label class="w-3/12 text-xl md:font-bold" for="screen_name" value="{{ __('Screen Name') }}" />
+                            <x-input class="w-6/12" id="screen_name" type="text" name="screen_name" value="{{ old('screen_name', optional($theater->screens->first())->name) }}" required />
+                        </div>
 
-            <div class="mt-4 flex justify-around">
-                <x-label class="w-3/12 text-xl md:font-bold" for="capacity" value="{{ __('Capacity') }}" />
-                <x-input class="w-6/12" id="capacity" type="number" name="capacity" value="{{ old('capacity', $theater->screens->capacity  ?? '') }}" required />
-            </div>
+                        <div class="mt-4 flex justify-around">
+                            <x-label class="w-3/12 text-xl md:font-bold" for="capacity" value="{{ __('Capacity') }}" />
+                            <x-input class="w-6/12" id="capacity" type="number" name="capacity" value="{{ old('capacity', optional($theater->screens->first())->capacity) }}" required />
+                        </div>
+                    @endforeach
+                    @endif
+                @endif
 
             <div class="mt-4 ml-2">
                 <x-button class="ml-20 px-6">

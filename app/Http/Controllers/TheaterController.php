@@ -9,10 +9,18 @@ use Illuminate\Http\RedirectResponse;
 
 class TheaterController extends Controller
 {
+
+    public function openScreenModal($theaterId)
+    {
+        $theater = Theater::findOrFail($theaterId);
+
+        return view('admin.screen-modal', compact('theater'));
+    }
+
     public function theaterForm(string $id)
     {
         $theater = ($id == 'new') ? new Theater() : Theater::with('screens')->findOrFail($id);
-        
+      
         return view('admin.theater-form', ['id' => $id, 'theater' => $theater]);
     }
 
@@ -28,13 +36,13 @@ class TheaterController extends Controller
                 'location' => $request->location,
             ]
         );
-        $screen = Screen::updateOrCreate(
-            [
-                'name' => $request->screen_name,
-                'capacity' => $request->capacity,
-                'theater_id' =>$theater->id
-            ]
-        );
+        // $screen = Screen::updateOrCreate(
+        //     [
+        //         'name' => $request->screen_name,
+        //         'capacity' => $request->capacity,
+        //         'theater_id' =>$theater->id
+        //     ]
+        // );
     
         $status = ($request->id) ? 'update' : 'add';
         return redirect()->route('theaters-list')->with('status', 'Theater ' . $theater->id . ' ' . $status . ' successfully!');
@@ -57,8 +65,7 @@ class TheaterController extends Controller
         return [
             'name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
-            'screen_name' => 'required|string|max:255',
-          
+         
         ];
     }
 }

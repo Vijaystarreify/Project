@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Movie;
+use App\Models\Theater;
+use App\Models\Screen;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 

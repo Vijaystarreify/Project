@@ -4,11 +4,11 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Theater;
+use App\Models\Show;
 
-class TheaterPagination extends Component
+
+class ShowPagination extends Component
 {
-    
     use WithPagination;
 
     public $searchTerm = '';
@@ -38,41 +38,18 @@ class TheaterPagination extends Component
         }
     }
 
-    public function mount()
-{
-    $this->showAddScreenModal = false;
-}
-    // Add this method to open the screen addition modal
-public function openScreenModal($theaterId)
-{
-    $this->theater = Theater::findOrFail($theaterId);
-    $this->showAddScreenModal = true;
-    $this->resetValidation();
-}
-
-public function closeModal()
-{
-    $this->emitTo('add-screen-form', 'closeAddScreenModal');
-}
-public $showAddScreenModal = false;
-public function closeAddScreenModal()
-{
-    $this->showAddScreenModal = false;
-}
-
-protected $listeners = ['closeAddScreenModal' => 'closeModal'];
-
     public function render()
     {
         $searchTerm = '%' . $this->searchTerm . '%';
-// dd("here");
-        return view('livewire.theater-pagination', [
-            'theaters' => Theater::query()
-                ->where('name', 'like', $searchTerm)
-                ->orWhere('location', 'like', $searchTerm)
+
+        return view('livewire.show-pagination', [
+            'shows' => Show::query()
+                ->where('movie_id', 'like', $searchTerm)
+                ->orWhere('screen_id', 'like', $searchTerm)
+                ->orWhere('show_time', 'like', $searchTerm)
+                ->orWhere('start_date', 'like', $searchTerm)
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10),
-                'showAddScreenModal' => $this->showAddScreenModal,
         ]);
     }
 }

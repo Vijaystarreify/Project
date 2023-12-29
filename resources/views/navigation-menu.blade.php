@@ -33,7 +33,7 @@
 
         <ul class="menu-list">
             <li class="--set-active-index-html">
-                <a href="">
+                <a href="{{ route('shows-list') }}">
                 <span class="icon"><i class="mdi mdi-plus-circle"></i></span>
                     <span class="menu-item-label">Add Show </span>
                 </a>
@@ -42,7 +42,7 @@
 
         <ul class="menu-list">
             <li class="--set-active-index-html">
-                <a href="">
+                <a href="F">
                 <span class="icon"><i class="mdi mdi-calendar"></i></span>
 
                     <span class="menu-item-label">Today Show </span>
@@ -59,13 +59,5 @@
             </li>
         </ul>
 
-        <ul class="menu-list">
-            <li class="--set-active-index-html">
-                <a href="">
-                <span class="icon"><i class="mdi mdi-eye"></i></span>
-                    <span class="menu-item-label">View Show</span>
-                </a>
-            </li>
-        </ul>
   </div>
 </aside>

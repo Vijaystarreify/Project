@@ -29,4 +29,11 @@ class Movie extends Model
         'location',
         'screen_number',
     ];
+
+    public function shows()
+    {
+        return $this->hasMany(Show::class);
+    }
+
+
 }
