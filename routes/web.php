@@ -46,7 +46,7 @@ Route::get('/theater/{id}/form', [TheaterController::class, 'theaterForm'])->nam
 Route::get('/theater/{id}/delete', [TheaterController::class, 'deleteTheater'])->name('theater-delete');
 Route::post('/theater/save', [TheaterController::class, 'saveTheaterData'])->name('save-theater-data');
 Route::get('/theater/{theaterId}/open-screen-modal', [TheaterController::class, 'openScreenModal'])->name('theater.open-screen-modal');
-
+Route::post('/add-screen', [TheaterController::class, 'addScreen'])->name('add-screen');
 
 
 Route::get('/shows', function () {

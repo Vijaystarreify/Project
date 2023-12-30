@@ -38,29 +38,6 @@ class TheaterPagination extends Component
         }
     }
 
-    public function mount()
-{
-    $this->showAddScreenModal = false;
-}
-    // Add this method to open the screen addition modal
-public function openScreenModal($theaterId)
-{
-    $this->theater = Theater::findOrFail($theaterId);
-    $this->showAddScreenModal = true;
-    $this->resetValidation();
-}
-
-public function closeModal()
-{
-    $this->emitTo('add-screen-form', 'closeAddScreenModal');
-}
-public $showAddScreenModal = false;
-public function closeAddScreenModal()
-{
-    $this->showAddScreenModal = false;
-}
-
-protected $listeners = ['closeAddScreenModal' => 'closeModal'];
 
     public function render()
     {
@@ -72,7 +49,7 @@ protected $listeners = ['closeAddScreenModal' => 'closeModal'];
                 ->orWhere('location', 'like', $searchTerm)
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10),
-                'showAddScreenModal' => $this->showAddScreenModal,
+                
         ]);
     }
 }

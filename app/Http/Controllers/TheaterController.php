@@ -10,11 +10,23 @@ use Illuminate\Http\RedirectResponse;
 class TheaterController extends Controller
 {
 
-    public function openScreenModal($theaterId)
+    public function addScreen(Request $request)
     {
-        $theater = Theater::findOrFail($theaterId);
+    //    dd($request);
+        $request->validate([
+            'screenName' => 'required|string',
+            'seats' => 'required|integer|min:1',
+        ]);
 
-        return view('admin.screen-modal', compact('theater'));
+        // Create a new screen
+        Screen::create([
+            'name' => $request->input('screenName'),
+            'capacity' => $request->input('seats'),
+             'theater_id' =>$request->theater_id
+        ]);
+
+        // You can return a response if needed
+        return response()->json(['message' => 'Screen added successfully']);
     }
 
     public function theaterForm(string $id)
