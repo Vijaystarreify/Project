@@ -35,7 +35,7 @@
                     <span class="icon"><i class="mdi mdi-plus"></i></span> Add Screen
                      </button> 
                      @if($showAddScreenModal)
-                   <livewire:add-screen-form :theater="$theater" />
+              <livewire:add-screen-form :theater="$theater" />
                       @endif
                     </td>
                 </tr>
