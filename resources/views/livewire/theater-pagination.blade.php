@@ -35,30 +35,29 @@
                      <span class="icon"><i class="mdi mdi-plus"></i></span> Add Screen
                      </button>
                      <div x-show="showModal" class="fixed inset-0 bg-black opacity-50" @click="showModal = false"></div>
-<!-- The Modal itself -->
-           <div x-show="showModal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-lg">
-          <h3 class="text-2xl font-bold mb-4">Add Screen</h3>
-    <!-- Add Screen Form -->
-    <form id="addScreenForm">
-    <input type="hidden" name="theater_id" value="{{ $theater->id }}">
-        <div class="mb-4">
-            <label for="screenName" class="block text-sm font-medium text-gray-700">Screen Name</label>
-            <input type="text" id="screenName" name="screenName" class="mt-1 p-2 w-full border border-gray-300 rounded-md">
-        </div>
-        <div class="mb-4">
-            <label for="seats" class="block text-sm font-medium text-gray-700">Number of Seats</label>
-            <input type="number" id="seats" name="seats" class="mt-1 p-2 w-full border border-gray-300 rounded-md">
-        </div>
-        <button type="button" @click="addScreen" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
-        </form>
-        </div>
-         </div>
-             </td>
+
+                    <div x-show="showModal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-lg">
+                     <h3 class="text-2xl font-bold mb-4">Add Screen</h3>
+
+                    <form id="addScreenForm">
+                    <input type="hidden" name="theater_id" value="{{ $theater->id }}">
+                    <div class="mb-4">
+                    <label for="screenName" class="block text-sm font-medium text-gray-700">Screen Name</label>
+                     <input type="text" id="screenName" name="screenName" class="mt-1 p-2 w-full border border-gray-300 rounded-md">
+                     </div>
+                      <div class="mb-4">
+                      <label for="seats" class="block text-sm font-medium text-gray-700">Number of Seats</label>
+                  <input type="number" id="seats" name="seats" class="mt-1 p-2 w-full border border-gray-300 rounded-md">
+                  </div>
+                    <button type="button" @click="addScreen" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                   </form>
+                   </div>
+                   </div>
+                   </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-
     <div class="table-pagination">
         <div class="flex items-center justify-between">
             <div class="buttons">
