@@ -26,10 +26,16 @@
                 </div>
                 @if ($id != 'new') {{-- Check if editing, then show screen details --}}
                 @if ($theater->screens)
-                        <div class="mt-4 flex justify-around">
-                            <x-label class="w-3/12 text-xl md:font-bold" for="screen_name" value="{{ __('Screen Name') }}" />
-                            <x-input class="w-6/12" id="screen_name" type="text" name="screen_name" value="{{ old('screen_name', optional($theater->screens->first())->name) }}" required />
-                        </div>
+                <div class="mt-4 flex justify-around">
+            <x-label class="w-3/12 text-xl md:font-bold" for="screen_id" value="{{ __('Select Screen') }}" />
+            <select class="w-6/12" id="screen_id" name="screen_id" required>
+                @foreach ($theater->screens as $screen)
+                    <option value="{{ $screen->id }}" {{ old('screen_id', $theater->screen_id) == $screen->id ? 'selected' : '' }}>
+                        {{ $screen->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
                         <div class="mt-4 flex justify-around">
                             <x-label class="w-3/12 text-xl md:font-bold" for="capacity" value="{{ __('Capacity') }}" />
                             <x-input class="w-6/12" id="capacity" type="number" name="capacity" value="{{ old('capacity', optional($theater->screens->first())->capacity) }}" required />

@@ -30,7 +30,13 @@
                     <a href="{{ route('theater-delete', ['id' => $theater->id]) }}" class="text-red-500" onclick="return confirm('Are you sure?')"> <button class="button small red --jb-modal" data-target="sample-modal" type="button">
                     <span class="icon"><i class="mdi mdi-trash-can"></i></span>
                     </button></a>
-                    <div x-data="{ showModal: false }">
+                    
+                   </td>
+                </tr>
+            @endforeach
+        </tbody>
+     </table>
+       <div x-data="{ showModal: false }">
                     <button @click="showModal = true" class="button small green">
                      <span class="icon"><i class="mdi mdi-plus"></i></span> Add Screen
                      </button>
@@ -40,10 +46,18 @@
                      <h3 class="text-2xl font-bold mb-4">Add Screen</h3>
 
                     <form id="addScreenForm">
-                    <input type="hidden" name="theater_id" value="{{ $theater->id }}">
+                    @csrf
+                    <div class="mb-4">
+                <label for="theater_id" class="block text-sm font-medium text-gray-700">Select Theater</label>
+                <select id="theater_id" name="theater_id" class="mt-1 p-2 w-full border border-gray-300 rounded-md">
+                    @foreach ($theaters as $theater)
+                        <option value="{{ $theater->id }}">{{ $theater->name }}</option>
+                    @endforeach
+                </select>
+            </div>
                     <div class="mb-4">
                     <label for="screenName" class="block text-sm font-medium text-gray-700">Screen Name</label>
-                     <input type="text" id="screenName" name="screenName" class="mt-1 p-2 w-full border border-gray-300 rounded-md">
+                     <input type="text" id="screenName" name="screenName"  class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                      </div>
                       <div class="mb-4">
                       <label for="seats" class="block text-sm font-medium text-gray-700">Number of Seats</label>
@@ -53,14 +67,9 @@
                    </form>
                    </div>
                    </div>
-                   </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-    <div class="table-pagination">
-        <div class="flex items-center justify-between">
-            <div class="buttons">
+                <div class="table-pagination">
+                <div class="flex items-center justify-between">
+                 <div class="buttons">
                 {{ $theaters->links() }}
             </div>
         </div>
@@ -70,17 +79,18 @@
     <script>
     function addScreen() {
         var formData = new FormData(document.getElementById('addScreenForm'));
+        console.log("Form Data:", formData); 
         axios.post('{{ route("add-screen") }}', formData)
             .then(function (response) {
+                console.log("Response:", response.data);
                 closeModal();
             })
             .catch(function (error) {
                 console.error(error);
             });
-    }
-    function closeModal() {
-
- document.getElementById('addScreenForm').reset();
+    }   
+ function closeModal() {
+        document.getElementById('addScreenForm').reset();
         Alpine.data['x-data'].showModal = false;
     }
 </script>

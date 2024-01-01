@@ -12,11 +12,8 @@ class TheaterController extends Controller
 
     public function addScreen(Request $request)
     {
-    //    dd($request);
-        $request->validate([
-            'screenName' => 'required|string',
-            'seats' => 'required|integer|min:1',
-        ]);
+
+      
 
         // Create a new screen
         Screen::create([
@@ -25,6 +22,7 @@ class TheaterController extends Controller
              'theater_id' =>$request->theater_id
         ]);
 
+
         // You can return a response if needed
         return response()->json(['message' => 'Screen added successfully']);
     }
@@ -32,13 +30,14 @@ class TheaterController extends Controller
     public function theaterForm(string $id)
     {
         $theater = ($id == 'new') ? new Theater() : Theater::with('screens')->findOrFail($id);
-      
+    
+     
         return view('admin.theater-form', ['id' => $id, 'theater' => $theater]);
     }
 
     public function saveTheaterData(Request $request): RedirectResponse
     {
-        // dd($request->capacity);
+        // dd($request);
         $request->validate($this->getValidationRules());
        
         $theater = Theater::updateOrCreate(
