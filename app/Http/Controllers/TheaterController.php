@@ -21,11 +21,40 @@ class TheaterController extends Controller
             'capacity' => $request->input('seats'),
              'theater_id' =>$request->theater_id
         ]);
-
-
-        // You can return a response if needed
         return response()->json(['message' => 'Screen added successfully']);
     }
+
+    public function updateScreenCapacity(Request $request)
+{
+  
+    $screenId = $request->input('screenId');
+    $capacity = $request->input('capacity');
+
+    // Update the screen capacity in the database
+    $screen = Screen::find($screenId);
+    if ($screen) {
+        $screen->capacity = $capacity;
+        $screen->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    return response()->json(['success' => false, 'message' => 'Screen not found']);
+}
+
+public function getScreenDetails($screenId)
+{
+    $screen = Screen::find($screenId);
+    if ($screen) {
+        return response()->json([
+            'name' => $screen->name,
+            'capacity' => $screen->capacity,
+            'theater_id' =>$screen->theater_id
+        ]);
+    }
+
+    return response()->json(['error' => 'Screen not found'], 404);
+}
 
     public function theaterForm(string $id)
     {
