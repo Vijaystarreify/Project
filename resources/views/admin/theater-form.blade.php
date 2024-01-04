@@ -67,14 +67,14 @@
       <h2 class="text-xl font-bold mb-4">Edit Screen</h2>
       <form>
       @csrf
-      <input type="hidden" id="id" name="id" value="{{ $theater->id ?? '' }}" />
+      <input type="hidden" id="id" name="id" value="" />
       <div class="mb-4">
         <label for="screenName" class="block text-gray-700 text-sm font-bold mb-2">Screen Name:</label>
-        <input type="text" id="screenName" name="screenName" value="{{ $screen->name }}" class="w-full border border-gray-300 p-2 rounded" readonly>
+        <input type="text" id="screenName" name="screenName" value="" class="w-full border border-gray-300 p-2 rounded" readonly>
     </div>
     <div class="mb-4">
         <label for="capacity" class="block text-gray-700 text-sm font-bold mb-2">Capacity:</label>
-        <input type="number" id="capacity" name="capacity" value="{{ $screen->capacity }}" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500">
+        <input type="number" id="capacity" name="capacity" value="" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500">
     </div>
     <button type="button" onclick="updateScreen()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save</button>
       </form>
@@ -88,8 +88,8 @@
     modal.classList.remove('hidden');
   }
         function updateScreen() {
-        var screenId = '{{ $screen->id }}'; 
-        var theaterId = '{{ $theater->id }}'; 
+        var screenId = ''; 
+        var theaterId = ''; 
         var capacity = document.getElementById('capacity').value;
 
         fetch('/update-screen-capacity', {
