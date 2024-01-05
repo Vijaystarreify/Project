@@ -6,53 +6,63 @@ use App\Models\Theater;
 use App\Models\Screen;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-
+use Illuminate\Http\Response;
 class TheaterController extends Controller
 {
 
     public function addScreen(Request $request)
     {
-
-      
-
         // Create a new screen
         Screen::create([
             'name' => $request->input('screenName'),
             'capacity' => $request->input('seats'),
              'theater_id' =>$request->theater_id
         ]);
-        return response()->json(['message' => 'Screen added successfully']);
+        $redirectUrl = route('theaters-list');
+        return response()->json(['redirect' => $redirectUrl], Response::HTTP_CREATED);
+        
     }
 
     public function updateScreenCapacity(Request $request)
 {
-  
     $screenId = $request->input('screenId');
     $capacity = $request->input('capacity');
-
+    $theaterId =$request->input('theaterId');
     // Update the screen capacity in the database
     $screen = Screen::find($screenId);
     if ($screen) {
         $screen->capacity = $capacity;
         $screen->save();
-
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true, 'redirect' => route('theater-form', ['id' => $theaterId])]);
+    }
+    return response()->json(['success' => false, 'error' => 'Something went wrong']);
+}
+public function deleteScreen(Request $req,$screenId, $theaterId): RedirectResponse
+{
+    $screen = Screen::find($screenId);
+    if ($screen) {
+        $screen->delete();
+        return redirect()->route('theater-form', ['id' => $theaterId])
+            ->with('status', 'Screen deleted successfully');
     }
 
-    return response()->json(['success' => false, 'message' => 'Screen not found']);
+    // If the screen doesn't exist, redirect back with an error message
+    return redirect()->route('theater-form', ['id' => $theaterId])
+        ->with('status', 'Screen not found');
 }
+
 
 public function getScreenDetails($screenId)
 {
     $screen = Screen::find($screenId);
     if ($screen) {
         return response()->json([
+            'id' =>$screen->id,
             'name' => $screen->name,
             'capacity' => $screen->capacity,
             'theater_id' =>$screen->theater_id
         ]);
     }
-
     return response()->json(['error' => 'Screen not found'], 404);
 }
 

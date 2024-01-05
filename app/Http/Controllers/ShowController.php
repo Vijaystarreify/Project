@@ -18,11 +18,14 @@ class ShowController extends Controller
 
     public function showForm(string $id)
     {
+       
         $show = ($id == 'new') ? new Show() : Show::findOrFail($id);
         $movies = Movie::all();
-        $screens = Screen::all();
+        $theaters = Theater::with('screens')->get();
+        // dd($theaters);
+        
 
-        return view('admin.show-form', ['id' => $id, 'show' => $show, 'movies' => $movies, 'screens' => $screens]);
+        return view('admin.show-form', ['id' => $id, 'show' => $show, 'movies' => $movies, 'theaters' => $theaters]);
     }
 
     public function saveShowData(Request $request): RedirectResponse

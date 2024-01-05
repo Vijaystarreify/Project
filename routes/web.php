@@ -45,7 +45,8 @@ Route::get('/theater/{id}/delete', [TheaterController::class, 'deleteTheater'])-
 Route::post('/theater/save', [TheaterController::class, 'saveTheaterData'])->name('save-theater-data');
 Route::get('/theater/{theaterId}/open-screen-modal', [TheaterController::class, 'openScreenModal'])->name('theater.open-screen-modal');
 Route::post('/add-screen', [TheaterController::class, 'addScreen'])->name('add-screen');
-// Route::get('/get-screen-details/{screenId}', [TheaterController::class, 'getScreenDetails']);
+Route::delete('/delete-screen/{screenId}/{theaterId}', [TheaterController::class, 'deleteScreen'])->name('delete-screen');
+Route::get('/api/screens/{screenId}', [TheaterController::class, 'getScreenDetails']);
 Route::post('/update-screen-capacity', [TheaterController::class, 'updateScreenCapacity'])->name('update-screen-capacity');
 
 // Show Routes

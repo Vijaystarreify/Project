@@ -1,10 +1,10 @@
+
 <x-app-layout>
     <x-slot name="header">
         <!-- You can add any header content here if needed -->
     </x-slot>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
     <div class="container mx-auto">
         <form action="{{ route('save-show-data') }}" method="post">
             @csrf
@@ -24,17 +24,29 @@
                 </select>
             </div>
 
-            <div class="mt-4 flex justify-around">
-                <x-label class="w-3/12 text-xl md:font-bold" for="screen_id" value="{{ __('Select Screen') }}" />
-                <select name="screen_id" class="w-6/12">
-                    @foreach ($screens as $screen)
-                        <option value="{{ $screen->id }}" {{ (optional($show->screen)->id == $screen->id) ? 'selected' : '' }}>
-                            {{ $screen->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+      <div class="mt-4 flex justify-around">
+    <x-label class="w-3/12 text-xl md:font-bold" for="" value="{{ __('Select Theater') }}" />
+    <select name="theater" class="w-6/12">
+        @foreach ($theaters as $theater)
+            <option value="{{ $theater->id }}">
+                {{ $theater->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
+<div class="mt-4 flex justify-around">
+    <x-label class="w-3/12 text-xl md:font-bold" for="screen_id" value="{{ __('Select Screen') }}" />
+    <select name="screen_id" class="w-6/12">
+        @foreach ($theaters as $theater)
+            @foreach ($theater->screens as $screen)
+                <option value="{{ $screen->id }}">
+                    {{ $screen->name }}
+                </option>
+            @endforeach
+        @endforeach
+    </select>
+</div>
             <div class="mt-4 flex justify-around">
                 <x-label class="w-3/12 text-xl md:font-bold" for="showtime" value="{{ __('Showtime') }}" />
                 <x-input id="showtime" class="w-6/12" type="text" name="showtime" value="{{ old('showtime', $show->show_time ?? '') }}" required />

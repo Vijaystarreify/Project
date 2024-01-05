@@ -40,7 +40,8 @@
                     <button @click="showModal = true" class="button small green">
                      <span class="icon"><i class="mdi mdi-plus"></i></span> Add Screen
                      </button>
-                     <div x-show="showModal" class="fixed inset-0 bg-black opacity-50" @click="showModal = false"></div>
+                     <div x-show="showModal" class="fixed inset-0 bg-black opacity-50" @click="showModal = false">      
+                     </div>
 
                     <div x-show="showModal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-lg">
                      <h3 class="text-2xl font-bold mb-4">Add Screen</h3>
@@ -82,15 +83,20 @@
         console.log("Form Data:", formData); 
         axios.post('{{ route("add-screen") }}', formData)
             .then(function (response) {
-                console.log("Response:", response.data);
                 closeModal();
+                window.location.href = response.data.redirect;
             })
             .catch(function (error) {
                 console.error(error);
             });
     }   
- function closeModal() {
-        document.getElementById('addScreenForm').reset();
+
+    function closeModal() {
+    document.getElementById('addScreenForm').reset();
+
+    // Check if the 'x-data' object is defined before accessing properties
+    if (Alpine.data['x-data'] && Alpine.data['x-data'].showModal !== undefined) {
         Alpine.data['x-data'].showModal = false;
     }
+}
 </script>
